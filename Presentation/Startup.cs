@@ -11,7 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Infrastructure;
+using Common.Interfaces;
+using MongoDB.Driver;
 
 namespace Presentation
 {
@@ -28,13 +30,13 @@ namespace Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             var mongoDbSettings = Configuration.GetSection(nameof(MongoDbConfig)).Get<MongoDbConfig>();
+
                 services.AddIdentity<ApplicationUser, ApplicationRole>().AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>(
                     mongoDbSettings.ConnectionString, mongoDbSettings.Name)
                 .AddDefaultTokenProviders();
-            
-            services.AddControllersWithViews();
-            
 
+            services.AddControllersWithViews();
+            services.AddScoped<IDataAccessRoom, DataAccessRoom>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

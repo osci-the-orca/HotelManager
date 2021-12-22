@@ -14,7 +14,7 @@ namespace Presentation.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
-        
+
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this._userManager = userManager;
@@ -36,10 +36,8 @@ namespace Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([Required][EmailAddress] string email, [Required] string password, string returnurl)
         {
-
             if (ModelState.IsValid)
             {
-
                 ApplicationUser appUser = await _userManager.FindByEmailAsync(email);
                 if (appUser != null)
                 {
